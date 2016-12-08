@@ -1,4 +1,10 @@
 # SpickerFX
+
+### Clickdummy:
+
+- [Homescreen][click_dummy_home]
+- [Spickzettel][click_dummy_spick]
+
 ### Nützliche Links:
 
 - [Trello][trello] für Projektmanagement und User-Stories
@@ -9,7 +15,8 @@
 - [Android Studio][studio]
 - [Material design][material] für Design-Guidelines etc.
 
-
+[click_dummy_home]: https://70yfnc.axshare.com/#g=1&p=homescreen
+[click_dummy_spick]: https://70yfnc.axshare.com/#g=1&p=spickzettel
 [trello]: https://trello.com
 [popapp]: https://popapp.in
 [marvel]: https://marvelapp.com
