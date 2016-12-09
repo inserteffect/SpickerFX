@@ -41,6 +41,17 @@
             android:drawablePadding="@dimen/spacing_medium"
             android:drawableStart="@drawable/ic_action_lock" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_brightness" />
+
+        <SeekBar
+            android:id="@+id/brightness"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:progress="100" />
+
     </LinearLayout>
 
 </LinearLayout>
