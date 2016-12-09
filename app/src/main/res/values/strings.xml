@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SpickerFX</string>
+    <string name="hint_spickzettel">Gib hier deinen Text für den Spickzettel ein.</string>
 </resources>
