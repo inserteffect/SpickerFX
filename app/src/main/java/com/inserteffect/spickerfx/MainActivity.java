@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SeekBar;
 
 import static com.inserteffect.spickerfx.util.Views.changeAlpha;
 import static com.inserteffect.spickerfx.util.Views.disableView;
@@ -29,10 +30,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor accelerometer;
 
     private boolean isLocked;
+    private float maxAlpha = 1f;
 
     private EditText textInput;
     private SwitchCompat lock;
     private View toolbar;
+    private SeekBar brightness;
 
     private Settings settings;
 
@@ -50,6 +53,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         @Override
         public void afterTextChanged(Editable editable) {
 
+        }
+    };
+
+    private final SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        private float currentAlpha;
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            textInput.setAlpha(seekBar.getProgress() / 100f);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            currentAlpha = textInput.getAlpha();
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            maxAlpha = seekBar.getProgress() / 100f;
+            textInput.setAlpha(currentAlpha);
         }
     };
 
@@ -116,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         textInput = (EditText) findViewById(R.id.text_input);
         lock = (SwitchCompat) findViewById(R.id.lock);
         toolbar = findViewById(R.id.tool_bar);
+        brightness = (SeekBar) findViewById(R.id.brightness);
     }
 
     private void initSettings() {
@@ -128,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private void initListeners() {
         lock.setOnCheckedChangeListener((compoundButton, checked) -> setLocked(checked));
         textInput.addTextChangedListener(textWatcher);
+        brightness.setOnSeekBarChangeListener(seekBarChangeListener);
     }
 
     private void initSensors() {
@@ -152,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private void onShow() {
         if (isLocked) {
-            changeAlpha(textInput, 1);
+            changeAlpha(textInput, maxAlpha);
         }
     }
 
