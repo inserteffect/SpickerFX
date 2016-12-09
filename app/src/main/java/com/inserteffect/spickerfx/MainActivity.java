@@ -1,6 +1,8 @@
 package com.inserteffect.spickerfx;
 
 
+import com.inserteffect.spickerfx.settings.Settings;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -9,6 +11,8 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -30,12 +34,32 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SwitchCompat lock;
     private View toolbar;
 
+    private Settings settings;
+
+    private final TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            settings.saveText(charSequence.toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         findViews();
+        initSettings();
         initListeners();
         initSensors();
     }
@@ -94,8 +118,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         toolbar = findViewById(R.id.tool_bar);
     }
 
+    private void initSettings() {
+        settings = new Settings(this);
+
+        textInput.setText(settings.loadText());
+        textInput.setSelection(textInput.getText().length());
+    }
+
     private void initListeners() {
         lock.setOnCheckedChangeListener((compoundButton, checked) -> setLocked(checked));
+        textInput.addTextChangedListener(textWatcher);
     }
 
     private void initSensors() {
